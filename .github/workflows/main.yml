@@ -1,0 +1,37 @@
+name: Build and Publish Docker image
+
+# This jobs takes a list of Dockerfile (matrix), builds them and publishes them to Github Packages
+
+on: [push]
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+          docker-image: [nginx]
+          folder: [docker/nginx]
+          context: [docker/nginx]
+          include:
+          - docker-image: mysql
+            folder: docker/mysql
+            context: docker/mysql
+          - docker-image: php-fpm
+            folder: docker/php-fpm
+            context: docker/php-fpm
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: banzo/symfony-helm/${{ matrix.docker-image }}
+          tag_with_ref: true
+          tag_with_sha: true
+          dockerfile: ${{ matrix.folder }}/Dockerfile
+          path: ${{ matrix.context }}
