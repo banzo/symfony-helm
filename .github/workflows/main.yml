@@ -19,8 +19,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
+          repository: banzo/symfony-helm/mysql
           tag_with_ref: true
           tag_with_sha: true
-          dockerfile: ./docker/mysql/Dockerfile
-          path: ./docker/mysql
-          tags: banzo/mysql:latest
+          dockerfile: docker/mysql/Dockerfile
+          path: docker/mysql
