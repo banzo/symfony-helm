@@ -1,7 +1,5 @@
-ARG VERSION
-
 # Dev image
-FROM nginx:${VERSION}-alpine as dev
+FROM nginx:1.19.2-alpine as dev
 
 # Copy nginx config
 COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
