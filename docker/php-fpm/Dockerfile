@@ -1,7 +1,5 @@
-ARG VERSION
-
 # Dev image
-FROM php:${VERSION}-fpm-alpine AS dev
+FROM php:7.4.10-fpm-alpine AS dev
 
 ## Install system dependencies
 RUN apk update && \
