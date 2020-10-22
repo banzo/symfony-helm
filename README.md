@@ -61,6 +61,12 @@ minikube addons enable ingress
 
 helm template helm
 
+kubectl create secret generic database-secret \
+    --from-literal=database=app \
+    --from-literal=password=root \
+    --from-literal=url=mysql://root:root@mysql:3306/app
+
+
 helm install symfony-helm helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
 
 kubectl get services
