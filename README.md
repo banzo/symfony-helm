@@ -3,7 +3,7 @@
 ## Docker Compose
 
 ```bash
-export "$(grep -v '^#' .env | xargs)"
+export "$(grep -v '^#' .env | xargs -d '\n')"
 
 docker-compose up
 ```
