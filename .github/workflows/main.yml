@@ -35,3 +35,7 @@ jobs:
           tag_with_sha: true
           dockerfile: ${{ matrix.folder }}/Dockerfile
           path: ${{ matrix.context }}
+        env: 
+          NGINX_VERSION: 1.19.2
+          PHP_VERSION: 7.4.10
+          MYSQL_VERSION: 8.0.21
