@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to GitHub Packages
+      - name: Push Mysql Docker image to GitHub Packages
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
@@ -24,3 +24,14 @@ jobs:
           tag_with_sha: true
           dockerfile: docker/mysql/Dockerfile
           path: docker/mysql
+      - name: Push Nginx Docker image to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: banzo/symfony-helm/nginx
+          tag_with_ref: true
+          tag_with_sha: true
+          dockerfile: docker/nginx/Dockerfile
+          path: docker/nginx
