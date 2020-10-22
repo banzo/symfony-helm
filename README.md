@@ -66,16 +66,21 @@ kubectl create secret generic database-secret \
     --from-literal=password=root \
     --from-literal=url=mysql://root:root@mysql:3306/app
 
-
 helm install symfony-helm helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
 
 kubectl get services
 
 kubectl get pods
 
+# View Minikube dashboard
 minikube dashboard
 
+# View the website, this will open a browser window
+minikube service nginx
+
+# Upgrade the deployment
 helm upgrade symfony-helm helm
 
+# Delete the deployment
 helm uninstall symfony-helm
 ```
