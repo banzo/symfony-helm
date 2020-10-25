@@ -45,3 +45,33 @@ jobs:
           tag_with_ref: true
           tag_with_sha: true
           dockerfile: docker/php-fpm/Dockerfile
+  minikube_deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        k8s: [v1.17.0]
+    steps:
+    - name: Ready minikube
+      uses: manusa/actions-setup-minikube@v1.1.0
+      with:
+        minikube version: 'v1.12.0'
+        kubernetes version: ${{ matrix.k8s }}
+        start args: '--cpus 6 --memory 8192 --addons=ingress'
+    - name: Checkout code
+      uses: actions/checkout@v1
+    - name: configure context
+      run: kubectl config set-context minikube
+    - name: create database secret
+      run: > 
+        kubectl create secret generic database-secret \
+        --from-literal=database=app \
+        --from-literal=password=root \
+        --from-literal=url=mysql://root:root@mysql:3306/app
+    - name: Helm install
+      run: helm install symfony-helm helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
+    - name: Check pods
+      run: kubectl get pods
+    - name: Check deployments
+      run: kubectl get deployments
+    - name: Check php-fpm deployment status
+      run: kubectl rollout status deployment php-fpm
