@@ -8,4 +8,4 @@ COPY ./docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 FROM dev as prod
 
 # Copy assets
-COPY ./assets /app/public
+# COPY ./assets /app/public
