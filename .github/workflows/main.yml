@@ -24,10 +24,6 @@ jobs:
           tag_with_sha: true
           dockerfile: docker/mysql/Dockerfile
           path: docker/mysql
-      - name: PWD
-        run: pwd
-      - name: LS
-        run: ls -la
       - name: Push Nginx Docker image to GitHub Packages
         uses: docker/build-push-action@v1
         with:
@@ -39,3 +35,13 @@ jobs:
           tag_with_sha: true
           dockerfile: docker/nginx/Dockerfile
           #path: docker/nginx
+      - name: Push php-fpm Docker image to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: banzo/symfony-helm/php-fpm
+          tag_with_ref: true
+          tag_with_sha: true
+          dockerfile: docker/php-fpm/Dockerfile
