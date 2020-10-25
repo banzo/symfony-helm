@@ -49,12 +49,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s: [v1.17.0]
+        k8s: [v1.18.3]
     steps:
     - name: Ready minikube
       uses: manusa/actions-setup-minikube@v1.1.0
       with:
-        minikube version: 'v1.12.0'
+        minikube version: 'v1.14.1'
         kubernetes version: ${{ matrix.k8s }}
         start args: '--cpus 6 --memory 8192 --addons=ingress'
     - name: Checkout code
@@ -63,9 +63,9 @@ jobs:
       run: kubectl config set-context minikube
     - name: create database secret
       run: > 
-        kubectl create secret generic database-secret \
-        --from-literal=database=app \
-        --from-literal=password=root \
+        kubectl create secret generic database-secret 
+        --from-literal=database=app 
+        --from-literal=password=root 
         --from-literal=url=mysql://root:root@mysql:3306/app
     - name: Helm install
       run: helm install symfony-helm helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
