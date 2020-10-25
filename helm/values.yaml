@@ -10,7 +10,7 @@ mysql:
   name: "mysql"
   image: 
     name: docker.pkg.github.com/banzo/symfony-helm/mysql
-    tag: latest
+    tag: sha-2bd3307
   port: 3306
   env:
     secret:
@@ -25,7 +25,7 @@ nginx:
   name: "nginx"
   image: 
     name: docker.pkg.github.com/banzo/symfony-helm/nginx
-    tag: latest
+    tag: sha-2bd3307
   port: 80
   probes:
     liveness: /healthz
@@ -35,7 +35,7 @@ phpfpm:
   name: "php-fpm"
   image: 
     name: docker.pkg.github.com/banzo/symfony-helm/php-fpm
-    tag: latest
+    tag: sha-2bd3307
   port: 9000
   env:
     secret:
