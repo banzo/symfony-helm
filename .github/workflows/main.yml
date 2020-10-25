@@ -55,7 +55,7 @@ jobs:
       - name: Update repositories
         run: helm repo update
       - name: Update dependencies of helm chart
-        run: helm dep up
+        run: helm dep up helm
       - name: Get GKE Key
         env:
           GCLOUD_KEY: ${{ secrets.SA_GKE }}
