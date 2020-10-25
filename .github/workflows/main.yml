@@ -24,6 +24,10 @@ jobs:
           tag_with_sha: true
           dockerfile: docker/mysql/Dockerfile
           path: docker/mysql
+      - name: PWD
+        run: pwd
+      - name: LS
+        run: ls -la
       - name: Push Nginx Docker image to GitHub Packages
         uses: docker/build-push-action@v1
         with:
