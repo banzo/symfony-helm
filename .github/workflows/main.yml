@@ -60,8 +60,6 @@ jobs:
         env:
           GCLOUD_KEY: ${{ secrets.SA_GKE }}
         run: echo "$GCLOUD_KEY" | base64 --decode > ${HOME}/gcloud.json
-      - name: mehhhhhh
-        run: cat /home/runner/gcloud.json
       - name: Activation service account authentification
         run: gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
       - name: Set the appropriate project
