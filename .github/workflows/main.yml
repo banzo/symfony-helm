@@ -49,12 +49,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        k8s: [v1.18.3]
+        k8s: [v1.17.0]
     steps:
     - name: Ready minikube
       uses: manusa/actions-setup-minikube@v1.1.0
       with:
-        minikube version: 'v1.14.1'
+        minikube version: 'v1.12.0'
         kubernetes version: ${{ matrix.k8s }}
         start args: '--cpus 6 --memory 6954 --addons=ingress'
     - name: Checkout code
