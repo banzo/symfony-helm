@@ -72,4 +72,4 @@ jobs:
           GCP_ZONE: ${{ 'europe-west1-b' }}
         run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
       - name: Install Symfony application
-        run: helm upgrade --install myapp .
+        run: helm upgrade --install myapp ./helm
