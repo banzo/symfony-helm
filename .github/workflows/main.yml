@@ -45,33 +45,31 @@ jobs:
           tag_with_ref: true
           tag_with_sha: true
           dockerfile: docker/php-fpm/Dockerfile
-  minikube_deploy:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        k8s: [v1.17.0]
+  deployment:
+    runs-on: 'ubuntu-latest'
     steps:
-    - name: Ready minikube
-      uses: manusa/actions-setup-minikube@v1.1.0
-      with:
-        minikube version: 'v1.12.0'
-        kubernetes version: ${{ matrix.k8s }}
-        start args: '--cpus 6 --memory 6954 --addons=ingress'
-    - name: Checkout code
-      uses: actions/checkout@v1
-    - name: configure context
-      run: kubectl config set-context minikube
-    - name: create database secret
-      run: > 
-        kubectl create secret generic database-secret 
-        --from-literal=database=app 
-        --from-literal=password=root 
-        --from-literal=url=mysql://root:root@mysql:3306/app
-    - name: Helm install
-      run: helm install symfony-helm helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
-    - name: Check pods
-      run: kubectl get pods
-    - name: Check deployments
-      run: kubectl get deployments
-    - name: Check php-fpm deployment status
-      run: kubectl rollout status deployment php-fpm
+      - name: Checkout symfony-helm
+        uses: actions/checkout@v2
+      - name: Add stable repository
+        run: helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+      - name: Update repositories
+        run: helm repo update
+      - name: Update dependencies of helm chart
+        run: helm dep up
+      - name: Get GKE Key
+        env:
+          GCLOUD_KEY: ${{ secrets.SA_GKE }}
+        run: echo "$GCLOUD_KEY" | base64 --decode > ${HOME}/gcloud.json
+      - name: Activation service account authentification
+        run: gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+      - name: Set the appropriate project
+        env:
+          GCP_PROJECT: ${{ 'bigdataatma-238514' }}
+        run: gcloud config set project "$GCP_PROJECT"
+      - name: Get credentials for a running cluster
+        env:
+          GKE_PROJECT: ${{ 'laravel' }}
+          GCP_ZONE: ${{ 'europe-west1-b' }}
+        run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
+      - name: Install Symfony application
+        run: helm upgrade --install myapp .
