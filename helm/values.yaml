@@ -9,8 +9,8 @@ resources:
 mysql:
   name: "mysql"
   image: 
-    repository: "docker.pkg.github.com/banzo/symfony-helm/mysql"
-    tag: "latest"
+    name: docker.pkg.github.com/banzo/symfony-helm/mysql
+    tag: latest
   port: 3306
   env:
     secret:
@@ -24,8 +24,8 @@ mysql:
 nginx:
   name: "nginx"
   image: 
-    repository: "docker.pkg.github.com/banzo/symfony-helm/nginx"
-    tag: "latest"
+    name: docker.pkg.github.com/banzo/symfony-helm/nginx
+    tag: latest
   port: 80
   probes:
     liveness: /healthz
@@ -34,8 +34,8 @@ nginx:
 phpfpm:
   name: "php-fpm"
   image: 
-    repository: "docker.pkg.github.com/banzo/symfony-helm/php-fpm"
-    tag: "latest"
+    name: docker.pkg.github.com/banzo/symfony-helm/php-fpm
+    tag: latest
   port: 9000
   env:
     secret:
