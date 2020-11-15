@@ -54,6 +54,7 @@ jobs:
         GKE_PROJECT: ${{ 'laravel' }}
         GCP_ZONE: ${{ 'europe-west1-b' }}
       run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
+    - run: ls
 
     # Build the Docker image
     - name: Build
@@ -74,7 +75,6 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" \
           ./php-fpm
 
-    - run: ls
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
