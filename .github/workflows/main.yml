@@ -32,5 +32,4 @@ jobs:
           GCP_ZONE: ${{ 'europe-west1-b' }}
         run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
       - name: Install Symfony application
-        run: helm upgrade --install myapp ./helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io
-        #run: helm upgrade --install myapp ./helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
+        run: helm upgrade --install myapp ./helm --set-string phpfpm.env.plain.APP_ENV=prod,nginx.host=symfony-helm.io,imageTag=latest
