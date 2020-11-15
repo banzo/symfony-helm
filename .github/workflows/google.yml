@@ -25,16 +25,16 @@ jobs:
           registry: ${{ env.GKE_ZONE}}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.SA_GKE }}
-      - name: Check out the repo
-        uses: actions/checkout@v2
+      #- name: Check out the repo
+       # uses: actions/checkout@v2
      
       - run: ls -la
       - run: pwd
       - name: Push Mysql Docker image to GAR
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
-          dockerfile: docker/mysql/Dockerfile
-          path: ./docker/mysql	
+          context: docker/mysql
+          file: ./docker/mysql/Dockerfile
           tag_with_ref: true
           tag_with_sha: true
           push: true
