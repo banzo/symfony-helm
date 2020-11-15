@@ -8,9 +8,7 @@ resources:
 
 mysql:
   name: "mysql"
-  image: 
-    registry: docker.pkg.github.com
-    repository: banzo/symfony-helm/mysql
+  image: docker.pkg.github.com/banzo/symfony-helm/mysql
   port: 3306
   env:
     secret:
@@ -23,9 +21,7 @@ mysql:
 
 nginx:
   name: "nginx"
-  image: 
-    registry: docker.pkg.github.com
-    repository: banzo/symfony-helm/nginx
+  image: docker.pkg.github.com/banzo/symfony-helm/nginx
   port: 80
   probes:
     liveness: /healthz
@@ -33,9 +29,7 @@ nginx:
 
 phpfpm:
   name: "php-fpm"
-  image: 
-    registry: docker.pkg.github.com
-    repository: banzo/symfony-helm/php-fpm
+  image: docker.pkg.github.com/banzo/symfony-helm/php-fpm
   port: 9000
   env:
     secret:
