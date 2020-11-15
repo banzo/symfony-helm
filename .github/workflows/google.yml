@@ -28,7 +28,6 @@ jobs:
       - name: Push Mysql Docker image to GAR
         uses: docker/build-push-action@v1
         with:
-          repository: banzo/symfony-helm/mysql
           tag_with_ref: true
           tag_with_sha: true
           dockerfile: docker/mysql/Dockerfile
