@@ -28,8 +28,8 @@ jobs:
       - name: Push Mysql Docker image to GAR
         uses: docker/build-push-action@v1
         with:
+          context: ./docker/mysql
+          file: ./docker/mysql/Dockerfile  
           tag_with_ref: true
           tag_with_sha: true
-          dockerfile: docker/mysql/Dockerfile
-          path: docker/mysql
           push: true
