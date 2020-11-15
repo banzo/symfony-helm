@@ -35,5 +35,6 @@ jobs:
         with:
           context: docker/mysql
           file: ./docker/mysql/Dockerfile
+          tags: banzo/symfony-helm/mysql:latest
           push: true
           
