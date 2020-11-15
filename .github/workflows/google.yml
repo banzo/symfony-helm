@@ -54,7 +54,6 @@ jobs:
         GKE_PROJECT: ${{ 'laravel' }}
         GCP_ZONE: ${{ 'europe-west1-b' }}
       run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
-    - run: ls
 
     # Build the Docker image
     - name: Build
@@ -63,17 +62,17 @@ jobs:
           --tag "gcr.io/$PROJECT_ID/nginx:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          ./nginx
+          ./docker/nginx
         docker build \
           --tag "gcr.io/$PROJECT_ID/mysql:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          ./mysql
+          ./docker/mysql
         docker build \
           --tag "gcr.io/$PROJECT_ID/php-fpm:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          ./php-fpm
+          ./docker/php-fpm
 
     # Push the Docker image to Google Container Registry
     - name: Publish
