@@ -62,17 +62,17 @@ jobs:
           --tag "gcr.io/$PROJECT_ID/nginx:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          .
+          ./nginx
         docker build \
           --tag "gcr.io/$PROJECT_ID/mysql:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          .
+          ./mysql
         docker build \
           --tag "gcr.io/$PROJECT_ID/php-fpm:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
-          .
+          ./php-fpm
 
     # Push the Docker image to Google Container Registry
     - name: Publish
