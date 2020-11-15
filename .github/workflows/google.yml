@@ -40,6 +40,13 @@ jobs:
     - run: |-
         gcloud --quiet auth configure-docker
 
+    - name: Get GKE Key
+      env:
+        GCLOUD_KEY: ${{ secrets.SA_GKE }}
+      run: echo "$GCLOUD_KEY" | base64 --decode > ${HOME}/gcloud.json
+    - name: Activation service account authentification
+      run: gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+
     - name: Set the appropriate project
       run: gcloud config set project "$PROJECT_ID"
     - name: Get credentials for a running cluster
