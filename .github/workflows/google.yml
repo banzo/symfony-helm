@@ -74,6 +74,7 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" \
           ./php-fpm
 
+    - run: ls
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |-
