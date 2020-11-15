@@ -22,6 +22,6 @@ jobs:
         name: Login to GAR
         uses: docker/login-action@v1
         with:
-          registry: ${{GKE_ZONE}}-docker.pkg.dev
+          registry: ${{ env.GKE_ZONE}}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.SA_GKE }}
