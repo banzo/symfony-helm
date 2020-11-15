@@ -14,19 +14,19 @@ docker-compose up
 ## Build Images
 
 ```bash
-docker build . -t bramalho/symfony-helm-mysql -f ./docker/mysql/Dockerfile \
+docker build . -t banzo/symfony-helm-mysql -f ./docker/mysql/Dockerfile \
     --build-arg VERSION=8.0.21
-docker push bramalho/symfony-helm-mysql
+docker push banzo/symfony-helm-mysql
 
-docker build . -t bramalho/symfony-helm-nginx -f ./docker/nginx/Dockerfile \
+docker build . -t banzo/symfony-helm-nginx -f ./docker/nginx/Dockerfile \
     --target prod \
     --build-arg VERSION=1.19.2
-docker push bramalho/symfony-helm-nginx
+docker push banzo/symfony-helm-nginx
 
-docker build . -t bramalho/symfony-helm-php-fpm -f ./docker/php-fpm/Dockerfile \
+docker build . -t banzo/symfony-helm-php-fpm -f ./docker/php-fpm/Dockerfile \
     --target prod \
     --build-arg VERSION=7.4.10
-docker push bramalho/symfony-helm-php-fpm
+docker push banzo/symfony-helm-php-fpm
 ```
 
 ## Kubernetes
