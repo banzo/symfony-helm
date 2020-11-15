@@ -1,0 +1,35 @@
+name: Build and Publish Docker image
+
+# This jobs takes a list of Dockerfile (matrix), builds them and publishes them to Github Packages
+
+on: [push]
+
+jobs:
+  deployment:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout symfony-helm
+        uses: actions/checkout@v2
+      - name: Add stable repository
+        run: helm repo add stable https://charts.helm.sh/stable/
+      - name: Update repositories
+        run: helm repo update
+      - name: Update dependencies of helm chart
+        run: helm dep up helm
+      - name: Get GKE Key
+        env:
+          GCLOUD_KEY: ${{ secrets.SA_GKE }}
+        run: echo "$GCLOUD_KEY" | base64 --decode > ${HOME}/gcloud.json
+      - name: Activation service account authentification
+        run: gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+      - name: Set the appropriate project
+        env:
+          GCP_PROJECT: ${{ 'bigdataatma-238514' }}
+        run: gcloud config set project "$GCP_PROJECT"
+      - name: Get credentials for a running cluster
+        env:
+          GKE_PROJECT: ${{ 'laravel' }}
+          GCP_ZONE: ${{ 'europe-west1-b' }}
+        run: gcloud container clusters get-credentials "$GKE_PROJECT" --zone "$GCP_ZONE"
+      - name: Install Symfony application
+        run: helm upgrade --install myapp ./helm
